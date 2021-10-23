@@ -1,15 +1,15 @@
 CC 		= gcc
-CCFLAGS = -Wall -Werror -Wextra -I./include
+CCFLAGS = -Wall -Werror -Wextra
+INCLUDE = -I./include
 AR		= ar
 ARFLAGS = rc
 
-FILES 	= main util
+FILES 	= ft_printf ft_str ft_expr
 S_DIR	= src
 B_DIR	= build
 SRC		= $(addprefix $(S_DIR)/, 	$(FILES:=.c))
 OBJ		= $(addprefix $(B_DIR)/, 	$(FILES:=.o))
-LIB		= printf.a
-TEST_EXEC = test_printf
+LIB		= lib_printf.a
 
 all: $(LIB)
 
@@ -18,10 +18,10 @@ $(LIB): $(OBJ)
 
 $(B_DIR)/%.o: $(S_DIR)/%.c
 	mkdir -p $(@D)
-	$(CC) $(CCFLAGS) -o $@ -c $<
+	$(CC) $(CCFLAGS) $(INCLUDE) -o $@ -c $<
 
-test:
-	$(CC) $(CCFLAGS) -o $(TEST_EXEC) $(LIB) tests/main.c
+debug: CCFLAGS += -g
+debug: all
 
 clean:
 	rm -f $(OBJ)
