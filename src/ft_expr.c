@@ -4,6 +4,7 @@
 #include "ft_str.h"
 
 char *g_modifiers[] = {"hh", "h", "l", "ll", "q", "L", "j", "z", "Z", "t"};
+
 char	    *put_str(char *str)
 {
     int i;
