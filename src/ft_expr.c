@@ -16,27 +16,23 @@ char	    *put_str(char *str)
     return str + i;
 }
 
-char*   parse_flags(char *exp, t_flags *flags)
+char*   parse_flags(char *exp, unsigned short *flags)
 {
     char c;
-    flags->alternate_form = 0;
-    flags->filler         = ' ';
-    flags->adjustement    = RIGHT;
-    flags->force_space    = 0;
-    flags->force_sign     = 1;
+    *flags = 0;
     while(*exp)
     {
         c = *exp;
         if(c == '#')
-            flags->alternate_form = 1;
+            *flags |= ALTERNATE_FORM;
         else if(c == '0')
-            flags->filler      = c;
+            *flags |= FILLER;
         else if(c == '-')
-            flags->adjustement = LEFT; 
+            *flags |= ADJUSTLEFT;
         else if(c == ' ')
-            flags->force_space = 1;
+            *flags |= FORCE_SPACE;
         else if(c == '+')
-            flags->force_sign  = 1;
+            *flags |= FORCE_SIGN;
         else 
             break ;
         exp++;
@@ -96,11 +92,11 @@ void	    put_exp(t_format format, va_list list)
     (void) list;
 
     puts("====================");
-    printf("alternate_form: %d\n", format.flags.alternate_form);
-    printf("filler        : %d\n", format.flags.filler);
-    printf("adjustement   : %d\n", format.flags.adjustement);
-    printf("force_space   : %d\n", format.flags.force_space);
-    printf("force_sign    : %d\n", format.flags.force_sign);
+    printf("alternate_form: %d\n", format.flags & ALTERNATE_FORM);
+    printf("filler        : %d\n", format.flags & FILLER);
+    printf("adjustement   : %d\n", format.flags & ADJUSTLEFT);
+    printf("force_space   : %d\n", format.flags & FORCE_SPACE);
+    printf("force_sign    : %d\n", format.flags & FORCE_SIGN);
 
     puts("");
 

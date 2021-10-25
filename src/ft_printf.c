@@ -10,9 +10,8 @@ void ft_printf(char *format, ...)
    
     va_start(args, format);
     str = format;
-    while(*str)
+    while(*(str = put_str(str)))
     {
-        str = put_str(str);
         str = parse_exp(str+1, &d_format, args);
         put_exp(d_format, args);
     }

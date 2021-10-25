@@ -3,16 +3,14 @@
 
 enum e_adjut {LEFT, RIGHT};
 
-typedef struct s_flags {
-    int             alternate_form;
-    int             filler;
-    enum e_adjut    adjustement;
-    int             force_space;
-    int             force_sign;
-}   t_flags;
+# define ALTERNATE_FORM 0b00001
+# define FILLER         0b00010
+# define ADJUSTLEFT     0b00100
+# define FORCE_SPACE    0b01000
+# define FORCE_SIGN     0b10000
 
 typedef struct s_format {
-    t_flags flags;
+    unsigned short flags;
     int width;
     int precision;
     int lenght_modifier;
