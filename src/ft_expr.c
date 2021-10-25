@@ -2,8 +2,10 @@
 #include <unistd.h>
 #include "ft_ds.h"
 #include "ft_str.h"
+#include "ft_nbr.h"
 
 char *g_modifiers[] = {"hh", "h", "l", "ll", "q", "L", "j", "z", "Z", "t"};
+void	    about_exp(t_format format, va_list list);
 
 char	    *put_str(char *str)
 {
@@ -86,8 +88,23 @@ char*   parse_exp(char *exp, t_format *format, va_list list)
     return exp + 1;
 }
 
+void	put_exp(t_format format, va_list list)
+{
+	if(format.specifier == 'd')
+	{
+		int d = va_arg(list, int);
+		put_nbr(format, d);
+	}
+	else if(format.specifier == 'f')
+	{
+		float d = va_arg(list, double);
+		put_float(format, d);
+	}
+	//about_exp(format,list);
+}
+
 #include<stdio.h>
-void	    put_exp(t_format format, va_list list)
+void	    about_exp(t_format format, va_list list)
 {
     (void) list;
 
