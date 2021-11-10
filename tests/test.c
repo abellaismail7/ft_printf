@@ -3,6 +3,6 @@
 
 int main()
 {
-	ft_printf("ismail: %-3.3hhd", 9);
-	printf("ismail: %-3.3d", 9);
+	ft_printf("ismail: %011.3dd\n", 5);
+	printf("ismail: %011.3dd\n", 5);
 }

@@ -4,7 +4,7 @@ INCLUDE = -I./include
 AR		= ar
 ARFLAGS = rc
 
-FILES 	= ft_printf ft_str ft_expr ft_nbr
+FILES 	= ft_printf ft_str ft_expr ft_nbr util
 S_DIR	= src
 B_DIR	= build
 SRC		= $(addprefix $(S_DIR)/, 	$(FILES:=.c))
@@ -21,7 +21,7 @@ $(B_DIR)/%.o: $(S_DIR)/%.c
 	$(CC) $(CCFLAGS) $(INCLUDE) -o $@ -c $<
 
 debug: CCFLAGS += -g
-debug: all
+debug: fclean all
 
 clean:
 	rm -f $(OBJ)

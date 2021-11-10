@@ -1,5 +1,5 @@
 CC 		= gcc
-CCFLAGS = -Wall -Werror -Wextra 
+CCFLAGS = -Werror -Wextra 
 INCLUDE = -I.
 
 SRC		= test.c 

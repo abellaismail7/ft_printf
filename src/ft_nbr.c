@@ -1,11 +1,12 @@
 #include<unistd.h>
 #include "ft_ds.h"
+#include "util.h"
 
 int	nbr_size(int nbr, int len)
 {
 	int	i;
 
-	i = 1;
+	i = 0;
 	while (nbr)
 	{
 		nbr /= len;
@@ -35,7 +36,7 @@ void    put_nbr(t_format format, int nb)
 	int	min;
 	int size;
 
-	size = nbr_size(nb, 10);
+	size = (nb <= 0) + nbr_size(nb, 10);
 	if (nb < 0)
 	{
 		size++;
@@ -49,14 +50,15 @@ void    put_nbr(t_format format, int nb)
 		}
 		nb = nb * -1;
 	}
-	int i = 0;
-	while(nb != 0  && size + i <= format.width)
-	{
-		write(1, "0", 1);
-		i++;
+	if (format.flags & ADJUSTLEFT) {
+		_ft_putnbr(nb);
+		filler('0', format.width - size);
 	}
-	_ft_putnbr(nb);
-
+	else
+	{
+		filler('0', format.width - size);
+		_ft_putnbr(nb);
+	}
 }
 
 int put_frac(double frac, int precision)
@@ -91,6 +93,5 @@ void put_float(t_format format, double nb)
 		return ;
 	write(1, ".", 1);
 	put_frac(nb - integral, format.precision);
-
 }
 
