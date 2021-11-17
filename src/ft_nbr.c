@@ -95,3 +95,26 @@ void put_float(t_format format, double nb)
 	put_frac(nb - integral, format.precision);
 }
 
+
+void put_hex(t_format format, unsigned long nb, int is_upp)
+{
+	char a[] = "0123456789abcdef";
+	char A[] = "0123456789ABCDEF";
+	char *selected;
+	char	c;
+	int		i;
+
+	selected = a;
+	if (is_upp)
+		selected = A;
+
+	i = 16 * 4;
+	while (i)
+	{
+		i -= 4;
+		c = nb >> i;
+		c = c & 0xf;
+		write(1, selected + c, 1);
+	}
+}
+

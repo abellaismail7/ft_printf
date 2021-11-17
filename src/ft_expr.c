@@ -93,14 +93,41 @@ void	put_exp(t_format format, va_list list)
 {
 	if (format.specifier == 'd')
 	{
-		int	d = va_arg(list, int);
-		put_nbr(format, d);
+		put_nbr(format, va_arg(list, int));
+	}
+	else if (format.specifier == 'c')
+	{
+		put_char(format, va_arg(list, int));
+	}
+	else if (format.specifier == 'p')
+	{
+		put_addr(format, va_arg(list, unsigned long long));
+	}
+	else if (format.specifier == 's')
+	{
+		put_fstr(format, va_arg(list, char *));
+	}
+	else if (format.specifier == 'i')
+	{
+		put_dec(format, va_arg(list, int));
+	}
+	else if (format.specifier == 'u')
+	{
+		put_udec(format, va_arg(list, unsigned int));
+	}
+	else if (format.specifier == 'x')
+	{
+		put_hex(format, va_arg(list, char *), 0);
+	}
+	else if (format.specifier == 'X')
+	{
+		put_hex(format, va_arg(list, char *), 1);
 	}
 	else if(format.specifier == 'f')
 	{
-		float	d = va_arg(list, double);
-		put_float(format, d);
+		put_float(format, va_arg(list, double));
 	}
+	
 	//about_exp(format,list);
 }
 
