@@ -1,8 +1,12 @@
 #include <stdio.h>
+#include <limits.h>
 #include "ft_printf.h"
 
 int main()
 {
-	ft_printf("ismail: %011.3dd\n", 5);
-	printf("ismail: %011.3dd\n", 5);
+	char a[] = "testio";
+	int i = 123;
+	const char *fmt = "ismail: %u %22x %X %11s %p\n";
+	ft_printf(fmt, INT_MIN, i, i, a, a);
+	printf(fmt, INT_MIN, i, i, a, a);
 }

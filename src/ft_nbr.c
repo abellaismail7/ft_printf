@@ -1,3 +1,15 @@
+/* ************************************************************************** */
+/*                                                                            */
+/*                                                        :::      ::::::::   */
+/*   ft_nbr.c                                           :+:      :+:    :+:   */
+/*                                                    +:+ +:+         +:+     */
+/*   By: iait-bel <marvin@42.fr>                    +#+  +:+       +#+        */
+/*                                                +#+#+#+#+#+   +#+           */
+/*   Created: 2021/11/18 17:04:59 by iait-bel          #+#    #+#             */
+/*   Updated: 2021/11/18 17:04:59 by iait-bel         ###   ########.fr       */
+/*                                                                            */
+/* ************************************************************************** */
+
 #include<unistd.h>
 #include "ft_ds.h"
 #include "util.h"
@@ -15,7 +27,7 @@ int	nbr_size(int nbr, int len)
 	return (i);
 }
 
-void	_ft_putnbr(int nb)
+void	_ft_putnbr(unsigned int nb)
 {
 	int	c;
 
@@ -95,26 +107,60 @@ void put_float(t_format format, double nb)
 	put_frac(nb - integral, format.precision);
 }
 
-
-void put_hex(t_format format, unsigned long nb, int is_upp)
+void put_addr(t_format format, unsigned long nb)
 {
 	char a[] = "0123456789abcdef";
-	char A[] = "0123456789ABCDEF";
-	char *selected;
 	char	c;
 	int		i;
+	int ignore_zero;
 
-	selected = a;
-	if (is_upp)
-		selected = A;
-
+	ignore_zero = 1;
+	write(1, "0x", 2);
 	i = 16 * 4;
 	while (i)
 	{
 		i -= 4;
 		c = nb >> i;
 		c = c & 0xf;
-		write(1, selected + c, 1);
+		if(ignore_zero && c == 0)
+			continue;
+		ignore_zero  = 0;
+		write(1, a + c, 1);
 	}
+	format.specifier = 0;
 }
 
+void put_hex(t_format format, int nb, int is_upp)
+{
+	char a[] = "0123456789abcdef";
+	char A[] = "0123456789ABCDEF";
+	int ignore_zero;
+	char *selected;
+	char	c;
+	int		i;
+
+	set_filler(format, format.width - count_hex(nb));
+	ignore_zero = 1;
+	selected = a;
+	if (is_upp)
+		selected = A;
+
+	i = 8 * 4;
+	while (i)
+	{
+		i -= 4;
+		c = nb >> i;
+		c = c & 0xf;
+		if(ignore_zero && c == 0)
+			continue;
+		ignore_zero  = 0;
+		write(1, selected + c, 1);
+	}
+	format.specifier = 0;
+}
+
+void put_udec(t_format format, int nb)
+{
+	format.specifier = 0;
+	_ft_putnbr(nb);
+}

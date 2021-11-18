@@ -91,42 +91,21 @@ char	*parse_exp(char *exp, t_format *format, va_list list)
 
 void	put_exp(t_format format, va_list list)
 {
-	if (format.specifier == 'd')
-	{
+	int sp = format.specifier;
+	if (sp == 'd' || sp == 'i')
 		put_nbr(format, va_arg(list, int));
-	}
-	else if (format.specifier == 'c')
-	{
+	else if (sp == 'c')
 		put_char(format, va_arg(list, int));
-	}
-	else if (format.specifier == 'p')
-	{
+	else if (sp == 'p')
 		put_addr(format, va_arg(list, unsigned long long));
-	}
-	else if (format.specifier == 's')
-	{
+	else if (sp == 's')
 		put_fstr(format, va_arg(list, char *));
-	}
-	else if (format.specifier == 'i')
-	{
-		put_dec(format, va_arg(list, int));
-	}
-	else if (format.specifier == 'u')
-	{
+	else if (sp == 'u')
 		put_udec(format, va_arg(list, unsigned int));
-	}
-	else if (format.specifier == 'x')
-	{
-		put_hex(format, va_arg(list, char *), 0);
-	}
-	else if (format.specifier == 'X')
-	{
-		put_hex(format, va_arg(list, char *), 1);
-	}
-	else if(format.specifier == 'f')
-	{
-		put_float(format, va_arg(list, double));
-	}
+	else if (sp == 'x' || sp == 'X')
+		put_hex(format, va_arg(list, unsigned long long), sp == 'X');
+	else if(sp == '%')
+		write(1, "%", 1);
 	
 	//about_exp(format,list);
 }

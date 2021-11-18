@@ -1,4 +1,6 @@
 
+#include "ft_ds.h"
+#include "util.h"
 int	ft_strncmp(char *s1, char *s2, unsigned int n)
 {
 	int	i;
@@ -23,3 +25,19 @@ int	ft_strlen(char *str)
 		i++;
 	return (i);
 }
+
+#include "unistd.h"
+void	put_char(t_format format, int c)
+{
+	format.specifier = 0;
+	write(1, &c, 1);
+}
+
+void	put_fstr(t_format format, char *str)
+{
+	int len;
+	len = ft_strlen(str);
+	set_filler(format, format.width - len);
+	write(1, str, len);
+}
+
