@@ -16,14 +16,19 @@ void	set_filler(t_format format, int len)
 	}
 }
 
-int count_hex(int nb)
+int has_flag(t_format format,int flag)
+{
+	return ((format.flags & flag) == flag);
+}
+
+int count_base(int nb, int base)
 {
 	int		count;
 
-	count = 0;
+	count = (nb <= 0);
 	while (nb)
 	{
-		nb /= 16;
+		nb /= base;
 		count++;
 	}
 	return count;
@@ -33,5 +38,4 @@ void filler(char c, int times)
 {
 	while(times--)
 		write(1, &c, 1);
-
 }

@@ -49,7 +49,11 @@ void    put_nbr(t_format format, int nb)
 	int size;
 
 	size = (nb <= 0) + nbr_size(nb, 10);
-	if (nb < 0)
+	if(nb > 0 && has_flag(format, FORCE_SIGN))
+	{
+		write(1, "+", 1);
+	}
+	else if (nb < 0)
 	{
 		size++;
 		write(1, "-", 1);
@@ -90,7 +94,6 @@ int put_frac(double frac, int precision)
 		count--;
 		precision--;
 	}
-
 	return count;
 }
 
@@ -99,7 +102,6 @@ void put_float(t_format format, double nb)
 	int integral;
 
 	integral = (int) nb;
-
 	put_nbr(format, integral);
 	if(format.precision == 0)
 		return ;
@@ -139,7 +141,16 @@ void put_hex(t_format format, int nb, int is_upp)
 	char	c;
 	int		i;
 
-	set_filler(format, format.width - count_hex(nb));
+	i = 0;
+	if (has_flag(format, ALTERNATE_FORM))
+		i = 2;
+	if (has_flag(format, FORCE_SPACE))
+	{
+		write(1, " ", 1);
+		i++;
+	}
+	set_filler(format, format.width - count_base(nb, 16) - i);
+	write(1, "0x", 2 * (i > 0));
 	ignore_zero = 1;
 	selected = a;
 	if (is_upp)

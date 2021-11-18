@@ -5,6 +5,7 @@
 
 void    filler(char c, int times);
 void	set_filler(t_format format, int len);
-int     count_hex(int nb);
+int     count_base(int nb, int base);
+int     has_flag(t_format format, int flag);
 
 #endif
