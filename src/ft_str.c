@@ -29,15 +29,30 @@ int	ft_strlen(char *str)
 #include "unistd.h"
 void	put_char(t_format format, int c)
 {
-	format.specifier = 0;
-	write(1, &c, 1);
+	if (format.flags & ADJUSTLEFT) {
+		write(1, &c, 1); // test !printable
+		set_filler(format, format.width - 1); 
+	}
+	else
+	{
+		set_filler(format, format.width - 1); 
+		write(1, &c, 1);
+	}
 }
 
 void	put_fstr(t_format format, char *str)
 {
 	int len;
 	len = ft_strlen(str);
+	if (format.flags & ADJUSTLEFT) {
+		write(1, str, len);
+		set_filler(format, format.width - len); 
+	}
+	else
+	{
+		set_filler(format, format.width - len); 
+		write(1, str, len);
+	}
 	set_filler(format, format.width - len);
-	write(1, str, len);
 }
 

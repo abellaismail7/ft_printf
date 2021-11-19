@@ -14,19 +14,6 @@
 #include "ft_ds.h"
 #include "util.h"
 
-int	nbr_size(int nbr, int len)
-{
-	int	i;
-
-	i = 0;
-	while (nbr)
-	{
-		nbr /= len;
-		i++;
-	}
-	return (i);
-}
-
 void	_ft_putnbr(unsigned int nb)
 {
 	int	c;
@@ -48,11 +35,9 @@ void    put_nbr(t_format format, int nb)
 	int	min;
 	int size;
 
-	size = (nb <= 0) + nbr_size(nb, 10);
+	size = (nb <= 0) + count_base(nb, 10);
 	if(nb > 0 && has_flag(format, FORCE_SIGN))
-	{
 		write(1, "+", 1);
-	}
 	else if (nb < 0)
 	{
 		size++;
@@ -68,11 +53,11 @@ void    put_nbr(t_format format, int nb)
 	}
 	if (format.flags & ADJUSTLEFT) {
 		_ft_putnbr(nb);
-		filler('0', format.width - size);
+		set_filler(format, format.width - size);
 	}
 	else
 	{
-		filler('0', format.width - size);
+		set_filler(format, format.width - size);
 		_ft_putnbr(nb);
 	}
 }
@@ -109,54 +94,21 @@ void put_float(t_format format, double nb)
 	put_frac(nb - integral, format.precision);
 }
 
-void put_addr(t_format format, unsigned long nb)
-{
-	char a[] = "0123456789abcdef";
-	char	c;
-	int		i;
-	int ignore_zero;
-
-	ignore_zero = 1;
-	write(1, "0x", 2);
-	i = 16 * 4;
-	while (i)
-	{
-		i -= 4;
-		c = nb >> i;
-		c = c & 0xf;
-		if(ignore_zero && c == 0)
-			continue;
-		ignore_zero  = 0;
-		write(1, a + c, 1);
-	}
-	format.specifier = 0;
-}
-
-void put_hex(t_format format, int nb, int is_upp)
+void _put_hex(unsigned long long nb, int is_upp, int i)
 {
 	char a[] = "0123456789abcdef";
 	char A[] = "0123456789ABCDEF";
+	char c;
 	int ignore_zero;
 	char *selected;
-	char	c;
-	int		i;
 
-	i = 0;
-	if (has_flag(format, ALTERNATE_FORM))
-		i = 2;
-	if (has_flag(format, FORCE_SPACE))
-	{
-		write(1, " ", 1);
-		i++;
-	}
-	set_filler(format, format.width - count_base(nb, 16) - i);
 	write(1, "0x", 2 * (i > 0));
 	ignore_zero = 1;
 	selected = a;
 	if (is_upp)
 		selected = A;
 
-	i = 8 * 4;
+	i = 16 * 4;
 	while (i)
 	{
 		i -= 4;
@@ -167,7 +119,32 @@ void put_hex(t_format format, int nb, int is_upp)
 		ignore_zero  = 0;
 		write(1, selected + c, 1);
 	}
-	format.specifier = 0;
+}
+
+void put_hex(t_format format, int nb, int is_upp)
+{
+	int		i;
+
+	i = 0;
+	if (has_flag(format, ALTERNATE_FORM))
+		i = 2;
+	if (format.flags & ADJUSTLEFT)
+	{
+		_put_hex(nb, is_upp, i);
+		set_filler(format, format.width - format.width - count_base(nb, 16) - i);
+	}
+	else
+	{
+		set_filler(format, format.width - format.width - count_base(nb, 16) - i);
+		_put_hex(nb, is_upp, i);
+	}
+	set_filler(format, format.width - count_base(nb, 16) - i);
+}
+
+void put_addr(t_format format, unsigned long long nb)
+{
+	format.flags = format.flags | ALTERNATE_FORM;
+	put_hex(format, nb, 0);
 }
 
 void put_udec(t_format format, int nb)

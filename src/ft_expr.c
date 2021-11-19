@@ -91,7 +91,9 @@ char	*parse_exp(char *exp, t_format *format, va_list list)
 
 void	put_exp(t_format format, va_list list)
 {
-	int sp = format.specifier;
+	int sp;
+
+	sp = format.specifier;
 	if (sp == 'd' || sp == 'i')
 		put_nbr(format, va_arg(list, int));
 	else if (sp == 'c')
@@ -106,7 +108,6 @@ void	put_exp(t_format format, va_list list)
 		put_hex(format, va_arg(list, unsigned long long), sp == 'X');
 	else if(sp == '%')
 		write(1, "%", 1);
-	
 	//about_exp(format,list);
 }
 
