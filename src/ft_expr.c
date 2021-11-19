@@ -30,7 +30,7 @@ char	*parse_flags(char *exp, unsigned short *flags)
 		if (c == '#')
 			*flags |= ALTERNATE_FORM;
 		else if (c == '0')
-			*flags |= FILLER;
+			*flags |= FILLZERO;
 		else if (c == '-')
 			*flags |= ADJUSTLEFT;
 		else if (c == ' ')
@@ -117,7 +117,7 @@ void	about_exp(t_format format, va_list list)
 	(void) list;
 	puts("====================");
 	printf("alternate_form: %d\n", format.flags & ALTERNATE_FORM);
-	printf("filler        : %d\n", format.flags & FILLER);
+	printf("filler        : %d\n", format.flags & FILLZERO);
 	printf("adjustement   : %d\n", format.flags & ADJUSTLEFT);
 	printf("force_space   : %d\n", format.flags & FORCE_SPACE);
 	printf("force_sign    : %d\n", format.flags & FORCE_SIGN);

@@ -4,7 +4,7 @@
 enum e_adjut {LEFT, RIGHT};
 
 # define ALTERNATE_FORM 0b00001
-# define FILLER         0b00010
+# define FILLZERO       0b00010
 # define ADJUSTLEFT     0b00100
 # define FORCE_SPACE    0b01000
 # define FORCE_SIGN     0b10000

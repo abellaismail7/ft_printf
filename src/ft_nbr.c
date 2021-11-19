@@ -36,9 +36,11 @@ void    put_nbr(t_format format, int nb)
 	int size;
 
 	size = (nb <= 0) + count_base(nb, 10);
-	if(nb > 0 && has_flag(format, FORCE_SIGN))
+	if(nb > 0 && (format.flags & FORCE_SIGN))
 		write(1, "+", 1);
-	else if (nb < 0)
+	else if (nb > 0 && (format.flags & FORCE_SPACE))
+		write(1, " ", 1);
+	if (nb < 0)
 	{
 		size++;
 		write(1, "-", 1);
@@ -96,17 +98,17 @@ void put_float(t_format format, double nb)
 
 void _put_hex(unsigned long long nb, int is_upp, int i)
 {
-	char a[] = "0123456789abcdef";
-	char A[] = "0123456789ABCDEF";
+	char a[] = "0123456789abcdef0x";
+	char A[] = "0123456789ABCDEF0X";
 	char c;
 	int ignore_zero;
 	char *selected;
 
-	write(1, "0x", 2 * (i > 0));
 	ignore_zero = 1;
 	selected = a;
 	if (is_upp)
 		selected = A;
+	write(1, selected + 16, 2 * (i > 0));
 
 	i = 16 * 4;
 	while (i)
@@ -121,7 +123,7 @@ void _put_hex(unsigned long long nb, int is_upp, int i)
 	}
 }
 
-void put_hex(t_format format, int nb, int is_upp)
+void put_hex(t_format format, unsigned long long nb, int is_upp)
 {
 	int		i;
 
@@ -138,7 +140,6 @@ void put_hex(t_format format, int nb, int is_upp)
 		set_filler(format, format.width - format.width - count_base(nb, 16) - i);
 		_put_hex(nb, is_upp, i);
 	}
-	set_filler(format, format.width - count_base(nb, 16) - i);
 }
 
 void put_addr(t_format format, unsigned long long nb)
@@ -149,6 +150,6 @@ void put_addr(t_format format, unsigned long long nb)
 
 void put_udec(t_format format, int nb)
 {
-	format.specifier = 0;
+	format.specifier = format.width;
 	_ft_putnbr(nb);
 }

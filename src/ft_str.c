@@ -43,7 +43,10 @@ void	put_char(t_format format, int c)
 void	put_fstr(t_format format, char *str)
 {
 	int len;
+	format.flags &= ~FILLZERO;
 	len = ft_strlen(str);
+	if(format.precision != -1)
+		len = format.precision;
 	if (format.flags & ADJUSTLEFT) {
 		write(1, str, len);
 		set_filler(format, format.width - len); 
@@ -53,6 +56,5 @@ void	put_fstr(t_format format, char *str)
 		set_filler(format, format.width - len); 
 		write(1, str, len);
 	}
-	set_filler(format, format.width - len);
 }
 

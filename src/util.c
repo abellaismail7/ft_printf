@@ -9,7 +9,7 @@ void	set_filler(t_format format, int len)
 		return ;
 	while(len--)
 	{
-		if((format.flags & FILLER) == FILLER)
+		if(format.flags & FILLZERO)
 			write(1, "0", 1);
 		else
 			write(1, " ", 1);
@@ -38,4 +38,11 @@ void filler(char c, int times)
 {
 	while(times--)
 		write(1, &c, 1);
+}
+
+void clear_format(t_format format)
+{
+	format.precision = -1;
+	format.flags = 0;
+	format.width = format.flags; // not working with clangd linux
 }

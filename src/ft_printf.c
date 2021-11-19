@@ -12,6 +12,7 @@ void ft_printf(char *format, ...)
     str = format;
     while(*(str = put_str(str)))
     {
+	    d_format.precision = -1;
         str = parse_exp(str+1, &d_format, args);
         put_exp(d_format, args);
     }
