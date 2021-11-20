@@ -1,0 +1,182 @@
+[
+ {
+  "directory": "/Users/iait-bel/projects/printf",
+  "arguments": [
+   "gcc",
+   "-Wall",
+   "-Werror",
+   "-Wextra",
+   "-I./include",
+   "-o",
+   "build/ft_printf.o",
+   "-c",
+   "src/ft_printf.c"
+  ],
+  "file": "src/ft_printf.c"
+ },
+ {
+  "directory": "/Users/iait-bel/projects/printf",
+  "arguments": [
+   "gcc",
+   "-Wall",
+   "-Werror",
+   "-Wextra",
+   "-I./include",
+   "-o",
+   "build/ft_str.o",
+   "-c",
+   "src/ft_str.c"
+  ],
+  "file": "src/ft_str.c"
+ },
+ {
+  "directory": "/Users/iait-bel/projects/printf",
+  "arguments": [
+   "gcc",
+   "-Wall",
+   "-Werror",
+   "-Wextra",
+   "-I./include",
+   "-o",
+   "build/ft_expr.o",
+   "-c",
+   "src/ft_expr.c"
+  ],
+  "file": "src/ft_expr.c"
+ },
+ {
+  "directory": "/Users/iait-bel/projects/printf",
+  "arguments": [
+   "gcc",
+   "-Wall",
+   "-Werror",
+   "-Wextra",
+   "-I./include",
+   "-o",
+   "build/ft_nbr.o",
+   "-c",
+   "src/ft_nbr.c"
+  ],
+  "file": "src/ft_nbr.c"
+ },
+ {
+  "directory": "/Users/iait-bel/projects/printf",
+  "arguments": [
+   "gcc",
+   "-Wall",
+   "-Werror",
+   "-Wextra",
+   "-I./include",
+   "-o",
+   "build/util.o",
+   "-c",
+   "src/util.c"
+  ],
+  "file": "src/util.c"
+ },
+ {
+  "directory": "/Users/iait-bel/projects/ft_printf",
+  "arguments": [
+   "gcc",
+   "-Wall",
+   "-Werror",
+   "-Wextra",
+   "-I./include",
+   "-o",
+   "build/ft_printf.o",
+   "-c",
+   "src/ft_printf.c"
+  ],
+  "file": "src/ft_printf.c"
+ },
+ {
+  "directory": "/Users/iait-bel/projects/ft_printf",
+  "arguments": [
+   "gcc",
+   "-Wall",
+   "-Werror",
+   "-Wextra",
+   "-I./include",
+   "-o",
+   "build/ft_str.o",
+   "-c",
+   "src/ft_str.c"
+  ],
+  "file": "src/ft_str.c"
+ },
+ {
+  "directory": "/Users/iait-bel/projects/ft_printf",
+  "arguments": [
+   "gcc",
+   "-Wall",
+   "-Werror",
+   "-Wextra",
+   "-I./include",
+   "-o",
+   "build/ft_expr.o",
+   "-c",
+   "src/ft_expr.c"
+  ],
+  "file": "src/ft_expr.c"
+ },
+ {
+  "directory": "/Users/iait-bel/projects/ft_printf",
+  "arguments": [
+   "gcc",
+   "-Wall",
+   "-Werror",
+   "-Wextra",
+   "-I./include",
+   "-o",
+   "build/ft_nbr.o",
+   "-c",
+   "src/ft_nbr.c"
+  ],
+  "file": "src/ft_nbr.c"
+ },
+ {
+  "directory": "/Users/iait-bel/projects/ft_printf",
+  "arguments": [
+   "gcc",
+   "-Wall",
+   "-Werror",
+   "-Wextra",
+   "-I./include",
+   "-o",
+   "build/util.o",
+   "-c",
+   "src/util.c"
+  ],
+  "file": "src/util.c"
+ },
+ {
+  "directory": "/Users/iait-bel/projects/ft_printf",
+  "arguments": [
+   "gcc",
+   "-Wall",
+   "-Werror",
+   "-Wextra",
+   "-I./include",
+   "-o",
+   "build/nbr_util.o",
+   "-c",
+   "src/nbr_util.c"
+  ],
+  "file": "src/nbr_util.c"
+ },
+ {
+  "directory": "/Users/iait-bel/projects/ft_printf",
+  "arguments": [
+   "gcc",
+   "-Wall",
+   "-Werror",
+   "-Wextra",
+   "-I./include",
+   "-o",
+   "build/str_util.o",
+   "-c",
+   "src/str_util.c"
+  ],
+  "file": "src/str_util.c"
+ }
+]

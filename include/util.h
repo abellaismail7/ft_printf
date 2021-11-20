@@ -11,6 +11,7 @@ void    clear_format(t_format *format);
 char	*ft_strchr(const char *s, int c);
 int max(int a, int b);
 int count_unsigned(unsigned long long nb, int base);
+void filler_setter(void(*f)(t_format, void *), t_format format, void *value, int len);
 
 
 #endif

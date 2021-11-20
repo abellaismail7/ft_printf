@@ -1,5 +1,0 @@
-*.a
-*.o
-.cache/
-compile_commands.json
-tests/test_printf

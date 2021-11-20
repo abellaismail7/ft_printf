@@ -1,31 +1,19 @@
+/* ************************************************************************** */
+/*                                                                            */
+/*                                                        :::      ::::::::   */
+/*   ft_str.c                                           :+:      :+:    :+:   */
+/*                                                    +:+ +:+         +:+     */
+/*   By: iait-bel <marvin@42.fr>                    +#+  +:+       +#+        */
+/*                                                +#+#+#+#+#+   +#+           */
+/*   Created: 2021/11/20 10:35:59 by iait-bel          #+#    #+#             */
+/*   Updated: 2021/11/20 10:35:59 by iait-bel         ###   ########.fr       */
+/*                                                                            */
+/* ************************************************************************** */
+
 #include "ft_ds.h"
 #include "ft_nbr.h"
 #include "util.h"
-
-int	ft_strncmp(char *s1, char *s2, unsigned int n)
-{
-	int	i;
-	int	j;
-
-	if (n == 0)
-		return (0);
-	i = 0;
-	j = n - 1;
-	while (s1[i] && s1[i] == s2[i] && i < j)
-		i++;
-	return ((unsigned char) s1[i] - (unsigned char) s2[i]);
-}
-
-
-int	ft_strlen(char *str)
-{
-	int	i;
-
-	i = 0;
-	while (str[i])
-		i++;
-	return (i);
-}
+#include "str_util.h"
 
 #include "unistd.h"
 int	put_char(t_format format, int c)
@@ -42,46 +30,37 @@ int	put_char(t_format format, int c)
 	return max(format.width, 1);
 }
 
+void put_mystr(t_format format, void *str)
+{
+	int len;
+
+	len = ft_strlen(str);
+	if(format.precision != -1 && format.precision < len)
+		len = format.precision;
+	write(1, str, len);
+}
+
 int	put_fstr(t_format format, char *str)
 {
 	int len;
 
 	if (str == 0)
 		return write(1, "(null)", 6);
-
 	format.flags &= ~FILLZERO;
 	len = ft_strlen(str);
 	if(format.precision != -1 && format.precision < len)
 		len = format.precision;
-	if (format.flags & ADJUSTLEFT) {
-		write(1, str, len);
-		set_filler(format, format.width - len); 
-	}
-	else
-	{
-		set_filler(format, format.width - len); 
-		write(1, str, len);
-	}
+	filler_setter(put_mystr, format, str, len);
+	//if (format.flags & ADJUSTLEFT) {
+	//	write(1, str, len);
+	//	set_filler(format, format.width - len); 
+	//}
+	//else
+	//{
+	//	set_filler(format, format.width - len); 
+	//	write(1, str, len);
+	//}
 	return max(format.width, len) ;
-}
-
-char	*ft_strchr(const char *s, int c)
-{
-	unsigned char	uc;
-	char			*str;
-
-	str = (char *) s;
-	uc = c;
-	while (*str)
-	{
-		if (*str == uc)
-			return (str);
-		str++;
-	}
-	if (uc == 0)
-		return (str);
-	else
-		return (0);
 }
 
 int put_what(t_format format)
@@ -97,7 +76,6 @@ int put_what(t_format format)
 	write(1, "%", 1);
 	if(format.flags & ALTERNATE_FORM)
 		write(1, "#", (i++ > 0));
-
 	if(format.flags & FORCE_SIGN)
 		write(1, "+", (i++ > 0));
 	else if(format.flags & FORCE_SPACE)

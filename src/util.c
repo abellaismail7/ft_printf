@@ -14,35 +14,20 @@ void	set_filler(t_format format, int len)
 	}
 }
 
-int has_flag(t_format format,int flag)
+void filler_setter(void(*f)(t_format, void *), t_format format, void *value, int len)
 {
-	return ((format.flags & flag) == flag);
-}
-
-int count_base(int nb, int base)
-{
-	int		count;
-
-	count = (nb <= 0);
-	while (nb)
+	if (format.flags & ADJUSTLEFT)
 	{
-		nb /= base;
-		count++;
+		f(format, value);
+		set_filler(format, format.width - len);
 	}
-	return count;
-}
-int count_unsigned(unsigned long long nb, int base)
-{
-	int		count;
-
-	count = (nb == 0);
-	while (nb)
+	else
 	{
-		nb /= base;
-		count++;
+		set_filler(format, format.width - len);
+		f(format, value);
 	}
-	return count;
 }
+
 void filler(char c, int times)
 {
 	if(times <= 0)
