@@ -12,9 +12,10 @@
 
 #include<unistd.h>
 #include "ft_ds.h"
+#include "ft_str.h"
 #include "util.h"
 
-void	_ft_putnbr(unsigned int nb)
+int	_ft_putnbr(unsigned int nb)
 {
 	int	c;
 
@@ -28,32 +29,41 @@ void	_ft_putnbr(unsigned int nb)
 		_ft_putnbr(nb / 10);
 		_ft_putnbr(nb % 10);
 	}
+	return count_base(nb, 10);
 }
 
-void    put_nbr(t_format format, int nb)
+int    put_nbr(t_format format, int nb)
 {
 	int	min;
 	int size;
 
-	size = (nb <= 0) + count_base(nb, 10);
-	if(nb > 0 && (format.flags & FORCE_SIGN))
-		write(1, "+", 1);
-	else if (nb > 0 && (format.flags & FORCE_SPACE))
-		write(1, " ", 1);
+	size = nb <= 0;
+	if(nb >= 0 && (format.flags & FORCE_SIGN))
+		write(1, "+", ++size >= 0);
+	else if (nb >= 0 && (format.flags & FORCE_SPACE))
+		write(1, " ", ++size >= 0);
+	if(nb == 0 && format.precision == 0)
+		return size;
+	size += count_base(nb, 10) - (nb <= 0);
+	if(format.precision != -1 && format.precision >= size)
+	{
+		filler('0', format.precision - size + (nb < 0));
+		size = format.precision;
+	}
 	if (nb < 0)
 	{
-		size++;
 		write(1, "-", 1);
 		min = 1 << (sizeof(int) * 8 - 1);
 		if (min == nb)
 		{
 			_ft_putnbr(nb / 10 * -1);
 			_ft_putnbr(nb % 10 * -1);
-			return ;
+			return max(size, format.width);
 		}
 		nb = nb * -1;
 	}
-	if (format.flags & ADJUSTLEFT) {
+	if (format.flags & ADJUSTLEFT)
+	{
 		_ft_putnbr(nb);
 		set_filler(format, format.width - size);
 	}
@@ -62,6 +72,7 @@ void    put_nbr(t_format format, int nb)
 		set_filler(format, format.width - size);
 		_ft_putnbr(nb);
 	}
+	return max(size, format.width);
 }
 
 int put_frac(double frac, int precision)
@@ -121,35 +132,53 @@ void _put_hex(unsigned long long nb, int is_upp, int i)
 		ignore_zero  = 0;
 		write(1, selected + c, 1);
 	}
+	if(ignore_zero)
+		write(1, "0", 1);
 }
 
-void put_hex(t_format format, unsigned long long nb, int is_upp)
+int	put_hex(t_format format, unsigned long long nb, int is_upp)
 {
 	int		i;
 
 	i = 0;
-	if (has_flag(format, ALTERNATE_FORM))
+	if (nb != 0 && format.flags & ALTERNATE_FORM)
 		i = 2;
 	if (format.flags & ADJUSTLEFT)
 	{
 		_put_hex(nb, is_upp, i);
-		set_filler(format, format.width - format.width - count_base(nb, 16) - i);
+		set_filler(format, format.width - count_unsigned(nb, 16) - i);
 	}
 	else
 	{
-		set_filler(format, format.width - format.width - count_base(nb, 16) - i);
+		set_filler(format, format.width - count_unsigned(nb, 16) - i);
 		_put_hex(nb, is_upp, i);
 	}
+	return max(format.width, i + count_unsigned(nb, 16));
 }
 
-void put_addr(t_format format, unsigned long long nb)
+int put_addr(t_format format, unsigned long long nb)
 {
+	if (nb == 0)
+	{
+		put_fstr(format, "(nil)");
+		return 5; 
+	}
 	format.flags = format.flags | ALTERNATE_FORM;
-	put_hex(format, nb, 0);
+	return put_hex(format, nb, 0);
 }
 
-void put_udec(t_format format, int nb)
+int put_udec(t_format format, unsigned int nb)
 {
 	format.specifier = format.width;
-	_ft_putnbr(nb);
+	if (format.flags & ADJUSTLEFT)
+	{
+		_ft_putnbr(nb);
+		set_filler(format, format.width - count_unsigned(nb, 10));
+	}
+	else
+	{
+		set_filler(format, format.width - count_unsigned(nb, 10));
+		_ft_putnbr(nb);
+	}
+	return max(format.width, count_unsigned(nb, 10));
 }

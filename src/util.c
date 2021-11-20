@@ -1,5 +1,3 @@
-
-
 #include <unistd.h>
 #include "ft_ds.h"
 
@@ -33,16 +31,37 @@ int count_base(int nb, int base)
 	}
 	return count;
 }
+int count_unsigned(unsigned long long nb, int base)
+{
+	int		count;
 
+	count = (nb == 0);
+	while (nb)
+	{
+		nb /= base;
+		count++;
+	}
+	return count;
+}
 void filler(char c, int times)
 {
+	if(times <= 0)
+		return;
 	while(times--)
 		write(1, &c, 1);
 }
 
-void clear_format(t_format format)
+void clear_format(t_format *format)
 {
-	format.precision = -1;
-	format.flags = 0;
-	format.width = format.flags; // not working with clangd linux
+	format->precision = -1;
+	format->flags = 0;
+	format->width = format->flags; // not working with clangd linux
+}
+
+int max(int a, int b)
+{
+	if(a > b)
+		return a;
+	else
+		return b;
 }

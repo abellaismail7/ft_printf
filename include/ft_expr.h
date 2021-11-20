@@ -4,8 +4,8 @@
 # include "ft_ds.h"
 #include <stdarg.h>
 
-char	    *put_str(char *str);
+int         put_str(char *str);
 int         next_exp(char **exp);
-char        *parse_exp(char *exp,t_format *format, va_list list);
-void	    put_exp(t_format format, va_list list);
+char        *parse_exp(char *exp,t_format *format);
+int         put_exp(t_format format, va_list list);
 #endif

@@ -9,7 +9,7 @@ S_DIR	= src
 B_DIR	= build
 SRC		= $(addprefix $(S_DIR)/, 	$(FILES:=.c))
 OBJ		= $(addprefix $(B_DIR)/, 	$(FILES:=.o))
-LIB		= lib_printf.a
+LIB		= libftprintf.a
 
 all: $(LIB)
 
@@ -22,6 +22,7 @@ $(B_DIR)/%.o: $(S_DIR)/%.c
 
 debug: CCFLAGS += -g
 debug: fclean all
+bonus: all
 
 clean:
 	rm -f $(OBJ)

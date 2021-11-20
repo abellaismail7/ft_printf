@@ -3,12 +3,13 @@
 #include "ft_ds.h"
 #include "ft_str.h"
 #include "ft_nbr.h"
+#include "util.h"
 
 void	about_exp(t_format format, va_list list);
 // this sort is important
 char	*g_modifiers[] = {"hh", "h", "ll", "l",  "q", "L", "j", "z", "Z", "t"};
 
-char	*put_str(char *str)
+int	put_str(char *str)
 {
 	int	i;
 
@@ -16,7 +17,7 @@ char	*put_str(char *str)
 	while (str[i] && str[i] != '%')
 		i++;
 	write(1, str, i);
-	return str + i;
+	return i;
 }
 
 char	*parse_flags(char *exp, unsigned short *flags)
@@ -49,7 +50,7 @@ char	*parse_var(char *exp, int *dest)
 	int	res;
 
 	res = 0;
-	while (*exp >= '1' && *exp <= '9')
+	while (*exp >= '0' && *exp <= '9')
 	{
 		res *= 10;
 		res += *exp - '0';
@@ -59,13 +60,11 @@ char	*parse_var(char *exp, int *dest)
 	return exp;
 }
 
-char	*parse_exp(char *exp, t_format *format, va_list list)
+char	*parse_exp(char *exp, t_format *format)
 {
 	int	i;
 	int	len;
 
-	(void) list;
-	format->precision = 6;
 	i = 0;
 	exp = parse_flags(exp, &format->flags);
 	exp = parse_var(exp, &format->width);
@@ -89,26 +88,28 @@ char	*parse_exp(char *exp, t_format *format, va_list list)
 	return exp + 1;
 }
 
-void	put_exp(t_format format, va_list list)
+int	put_exp(t_format format, va_list list)
 {
 	int sp;
+	int count;
 
+	count = 0;
 	sp = format.specifier;
 	if (sp == 'd' || sp == 'i')
-		put_nbr(format, va_arg(list, int));
+		count = put_nbr(format, va_arg(list, int));
 	else if (sp == 'c')
-		put_char(format, va_arg(list, int));
+		count = put_char(format, va_arg(list, int));
 	else if (sp == 'p')
-		put_addr(format, va_arg(list, unsigned long long));
+		count = put_addr(format, va_arg(list, unsigned long long));
 	else if (sp == 's')
-		put_fstr(format, va_arg(list, char *));
+		count = put_fstr(format, va_arg(list, char *));
 	else if (sp == 'u')
-		put_udec(format, va_arg(list, unsigned int));
+		count = put_udec(format, va_arg(list, unsigned int));
 	else if (sp == 'x' || sp == 'X')
-		put_hex(format, va_arg(list, unsigned long long), sp == 'X');
-	else if(sp == '%')
-		write(1, "%", 1);
-	//about_exp(format,list);
+		count = put_hex(format, va_arg(list, unsigned long long), sp == 'X');
+	else
+		count = put_what(format);	
+	return count;
 }
 
 #include<stdio.h>

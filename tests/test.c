@@ -4,9 +4,16 @@
 
 int main()
 {
-	char a[] = "testio";
-	int i = 123;
-	const char *fmt = "ismail: %u % d %# X %-011s %p\n";
-	ft_printf(fmt, INT_MIN, i, i, a, a);
-	printf(fmt, INT_MIN, i, i, a, a);
+	const char *fmt = "ismail: %0#- +1.1@@ %u % d %# X %11s %9 \n";
+	int ret;
+	fflush(stdout);
+
+	puts("===== test i  ====");
+	fflush(stdout);
+	fmt = " %.2d";
+	ret = ft_printf(fmt, -1);
+	printf("(%d)\n", ret);
+	ret = printf(fmt, -1);
+	printf("(%d)\n", ret);
+	fflush(stdout);
 }

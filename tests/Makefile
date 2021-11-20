@@ -6,7 +6,7 @@ SRC		= test.c
 OBJ		= $(SRC:.c=.o)
 EXEC 	= test_printf
 LIB_DIR = ..
-LIB		= _printf
+LIB		= ftprintf
 
 all: $(EXEC)
 
@@ -17,7 +17,7 @@ $(OBJ) : $(SRC)
 	$(CC) $(CCFLAGS) $(INCLUDE) -o $@ -c $<
 
 debug: CCFLAGS += -g
-debug: all
+debug: fclean all
 
 clean:
 	rm -f $(OBJ)
