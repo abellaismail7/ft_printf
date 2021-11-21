@@ -20,14 +20,11 @@ void _putnbr(t_format format, int nb)
 {
 	int size;
 
-	if(nb >= 0)
-	{
-		write(1, "+", (format.flags & FORCE_SIGN) > 0 );
-		write(1, " ", (format.flags & FORCE_SPACE) > 0);
-	}
+
 	if (nb < 0)
 	{
-		write(1, "-", 1);
+		if(!(format.flags & FILLZERO))
+			write(1, "-", 1);
 		if ((1 << (sizeof(int) * 8 - 1)) == nb)
 		{
 			_ft_putnbr(nb / 10 * -1);
@@ -52,6 +49,15 @@ int    put_nbr(t_format format, int nb)
 	size = nb <= 0;
 	if(nb == 0 && format.precision == 0)
 		return size;
+	if (nb <= 0 && (format.flags & FILLZERO))
+		write(1, "-", 1);
+	if(nb >= 0)
+	{
+		size += (format.flags & FORCE_SIGN) || (format.flags & FORCE_SPACE);
+		write(1, "+", (format.flags & FORCE_SIGN) > 0 );
+		write(1, " ", (format.flags & FORCE_SPACE) > 0);
+	}
+
 	size += count_base(nb, 10) - (nb <= 0);
 	size = max(size, format.precision + (nb < 0));
 	if (format.flags & ADJUSTLEFT)
