@@ -71,13 +71,13 @@ char	*parse_exp(char *exp, t_format *format)
 	return exp + 1;
 }
 
-int	put_exp(t_format format, va_list list)
+int	put_exp(t_format *format, va_list list)
 {
 	int sp;
 	int count;
 
 	count = 0;
-	sp = format.specifier;
+	sp = format->specifier;
 	if (sp == 'd' || sp == 'i')
 		count = put_nbr(format, va_arg(list, int));
 	else if (sp == 'c')

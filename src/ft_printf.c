@@ -24,7 +24,7 @@ int ft_printf(char *format, ...)
             break;
         clear_format(&d_format);
         str = parse_exp(str+1, &d_format);
-        counter += put_exp(d_format, args);
+        counter += put_exp(&d_format, args);
     }
     return counter;
 }

@@ -29,15 +29,15 @@ int count_unsigned(unsigned long long nb, int base)
 }
 
 int	_ft_putnbr(unsigned int nb);
-int	__ft_putnbr(t_format format, unsigned int nb, int size)
+int	__ft_putnbr(t_format *format, unsigned int nb, int size)
 {
 	int ret;
 
 	ret = size;
-	if(format.precision != -1 && format.precision >= size)
+	if(format->precision != -1 && format->precision >= size)
 	{
-		filler('0', format.precision - size);
-		ret = format.precision;
+		filler('0', format->precision - size);
+		ret = format->precision;
 	}
 	_ft_putnbr(nb);
 	return ret;
@@ -60,7 +60,7 @@ int	_ft_putnbr(unsigned int nb)
 	return count_base(nb, 10);
 }
 
-int _put_hex(t_format format, unsigned long long nb, int is_upp)
+int _put_hex(t_format *format, unsigned long long nb, int is_upp)
 {
 	char c;
 	int	i;
@@ -74,14 +74,14 @@ int _put_hex(t_format format, unsigned long long nb, int is_upp)
 	ignore_zero = 1;
 	i = 0;
 	count = 0;
-	if (format.flags & ALTERNATE_FORM)
+	if (nb != 0 && format->flags & ALTERNATE_FORM)
 		i = 2;
 	write(1, selected[is_upp] + 16, 2 * (i > 0));
 	count += count_unsigned(nb, 16);
-	if(format.precision != -1 && format.precision >= i + count)
+	if(format->precision != -1 && format->precision >= i + count)
 	{
-		filler('0', format.precision - i - count);
-		count = format.precision;
+		filler('0', format->precision - i - count);
+		count = format->precision;
 	}
 	count += i;
 	i = 16 * 4;

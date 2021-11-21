@@ -1,29 +1,30 @@
 #include <unistd.h>
 #include "ft_ds.h"
 
-void	set_filler(t_format format, int len)
+void	set_filler(t_format *format, int len)
 {
 	if(len < 0)
 		return ;
+
 	while(len--)
 	{
-		if(format.flags & FILLZERO)
+		if(format->flags & FILLZERO)
 			write(1, "0", 1);
 		else
 			write(1, " ", 1);
 	}
 }
 
-void filler_setter(void(*f)(t_format, void *), t_format format, void *value, int len)
+void filler_setter(void(*f)(t_format*, void *), t_format *format, void *value, int len)
 {
-	if (format.flags & ADJUSTLEFT)
+	if (format->flags & ADJUSTLEFT)
 	{
 		f(format, value);
-		set_filler(format, format.width - len);
+		set_filler(format, format->width - len);
 	}
 	else
 	{
-		set_filler(format, format.width - len);
+		set_filler(format, format->width - len);
 		f(format, value);
 	}
 }

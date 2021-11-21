@@ -7,5 +7,5 @@
 int         put_str(char *str);
 int         next_exp(char **exp);
 char        *parse_exp(char *exp,t_format *format);
-int         put_exp(t_format format, va_list list);
+int         put_exp(t_format *format, va_list list);
 #endif
