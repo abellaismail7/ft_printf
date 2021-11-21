@@ -10,7 +10,7 @@ int main()
 
 	puts("===== test i  ====");
 	fflush(stdout);
-	fmt = " %-3u";
+	fmt = " %09p";
 	ret = ft_printf(fmt, 0);
 	printf("(%d)\n", ret);
 	ret = printf(fmt, 0);

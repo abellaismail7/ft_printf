@@ -1,3 +1,15 @@
+/* ************************************************************************** */
+/*                                                                            */
+/*                                                        :::      ::::::::   */
+/*   ft_expr.c                                          :+:      :+:    :+:   */
+/*                                                    +:+ +:+         +:+     */
+/*   By: iait-bel <marvin@42.fr>                    +#+  +:+       +#+        */
+/*                                                +#+#+#+#+#+   +#+           */
+/*   Created: 2021/11/21 19:40:13 by iait-bel          #+#    #+#             */
+/*   Updated: 2021/11/21 19:40:13 by iait-bel         ###   ########.fr       */
+/*                                                                            */
+/* ************************************************************************** */
+
 #include <stdarg.h>
 #include <unistd.h>
 #include "ft_ds.h"
@@ -15,7 +27,7 @@ int	put_str(char *str)
 	while (str[i] && str[i] != '%')
 		i++;
 	write(1, str, i);
-	return i;
+	return (i);
 }
 
 char	*parse_flags(char *exp, unsigned short *flags)
@@ -40,7 +52,11 @@ char	*parse_flags(char *exp, unsigned short *flags)
 			break ;
 		exp++;
 	}
-	return exp;
+	if (*flags & ADJUSTLEFT)
+		*flags &= ~FILLZERO;
+	if (*flags & FORCE_SIGN)
+		*flags &= ~FORCE_SPACE;
+	return (exp);
 }
 
 char	*parse_var(char *exp, int *dest)
@@ -55,7 +71,7 @@ char	*parse_var(char *exp, int *dest)
 		exp++;
 	}
 	*dest = res;
-	return exp;
+	return (exp);
 }
 
 char	*parse_exp(char *exp, t_format *format)
@@ -68,13 +84,13 @@ char	*parse_exp(char *exp, t_format *format)
 		exp = parse_var(exp, &format->precision);
 	}
 	format->specifier = *exp;
-	return exp + 1;
+	return (exp + 1);
 }
 
 int	put_exp(t_format *format, va_list list)
 {
-	int sp;
-	int count;
+	int	sp;
+	int	count;
 
 	count = 0;
 	sp = format->specifier;
@@ -91,6 +107,6 @@ int	put_exp(t_format *format, va_list list)
 	else if (sp == 'x' || sp == 'X')
 		count = put_hex(format, va_arg(list, unsigned long long), sp == 'X');
 	else
-		count = put_what(format);	
-	return count;
+		count = put_what(format);
+	return (count);
 }

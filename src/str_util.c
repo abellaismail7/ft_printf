@@ -1,3 +1,15 @@
+/* ************************************************************************** */
+/*                                                                            */
+/*                                                        :::      ::::::::   */
+/*   str_util.c                                         :+:      :+:    :+:   */
+/*                                                    +:+ +:+         +:+     */
+/*   By: iait-bel <marvin@42.fr>                    +#+  +:+       +#+        */
+/*                                                +#+#+#+#+#+   +#+           */
+/*   Created: 2021/11/21 19:45:53 by iait-bel          #+#    #+#             */
+/*   Updated: 2021/11/21 19:45:53 by iait-bel         ###   ########.fr       */
+/*                                                                            */
+/* ************************************************************************** */
+
 int	ft_strncmp(char *s1, char *s2, unsigned int n)
 {
 	int	i;
@@ -11,7 +23,6 @@ int	ft_strncmp(char *s1, char *s2, unsigned int n)
 		i++;
 	return ((unsigned char) s1[i] - (unsigned char) s2[i]);
 }
-
 
 int	ft_strlen(char *str)
 {
