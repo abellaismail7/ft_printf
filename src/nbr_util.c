@@ -85,9 +85,9 @@ int	_put_hex(t_format *format, unsigned long long nb, int is_upp)
 		i = 2;
 	write(1, selected[is_upp] + 16, 2 * (i > 0));
 	count += count_unsigned(nb, 16) - (!format->precision && !nb);
-	if (format->precision != -1 && format->precision >= count)
+	if (format->precision != -1 && format->precision >= count + i)
 	{
-		filler('0', format->precision - count);
+		filler('0', format->precision - i - count);
 		count = format->precision;
 	}
 	count += i;

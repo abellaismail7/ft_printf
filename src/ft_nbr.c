@@ -71,10 +71,10 @@ int	put_hex(t_format *format, unsigned long long nb, int is_upp)
 	int	i;
 
 	i = 0;
-	if (format->specifier == 'p' || (nb != 0 && format->flags & ALTERNATE_FORM))
+	if (format->specifier == 'p' || (!nb && format->flags & ALTERNATE_FORM))
 		i = 2;
 	if (format->precision == -1)
-		format->precision = count_unsigned(nb, 16);
+		format->precision = count_unsigned(nb, 16) - i;
 	if (format->flags & FILLZERO && format->width > format->precision)
 	{
 		format->precision = format->width - i;

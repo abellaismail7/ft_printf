@@ -10,7 +10,7 @@ int main()
 
 	puts("===== test i  ====");
 	fflush(stdout);
-	fmt = " %#04.0x";
+	fmt = " %#04x";
 	ret = ft_printf(fmt, 1);
 	printf("(%d)\n", ret);
 	ret = printf(fmt, 1);
