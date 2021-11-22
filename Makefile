@@ -1,4 +1,4 @@
-CC 		= gcc
+CC 		= cc
 CCFLAGS = -Wall -Werror -Wextra
 INCLUDE = -I./include
 AR		= ar

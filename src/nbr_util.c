@@ -81,10 +81,10 @@ int	_put_hex(t_format *format, unsigned long long nb, int is_upp)
 
 	i = 0;
 	count = 0;
-	if (format->specifier == 'p' || (nb != 0 && format->flags & ALTERNATE_FORM))
+	if (format->specifier == 'p' || (nb && format->flags & ALTERNATE_FORM))
 		i = 2;
 	write(1, selected[is_upp] + 16, 2 * (i > 0));
-	count += count_unsigned(nb, 16);
+	count += count_unsigned(nb, 16) - (!format->precision && !nb);
 	if (format->precision != -1 && format->precision >= count)
 	{
 		filler('0', format->precision - count);
@@ -101,6 +101,6 @@ int	_put_hex(t_format *format, unsigned long long nb, int is_upp)
 			continue ;
 		ignore_zero = ! write(1, selected[is_upp] + c, 1);
 	}
-	write(1, "0", ignore_zero);
+	write(1, "0", ignore_zero && format->precision != 0);
 	return (count);
 }

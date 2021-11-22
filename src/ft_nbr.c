@@ -75,6 +75,11 @@ int	put_hex(t_format *format, unsigned long long nb, int is_upp)
 		i = 2;
 	if (format->precision == -1)
 		format->precision = count_unsigned(nb, 16);
+	if (format->flags & FILLZERO && format->width > format->precision)
+	{
+		format->precision = format->width - i;
+		format->width = 0;
+	}
 	if (format->flags & ADJUSTLEFT)
 	{
 		count = _put_hex(format, nb, is_upp);
