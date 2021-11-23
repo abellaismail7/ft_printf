@@ -67,31 +67,30 @@ int	put_nbr(t_format *format, int nb)
 
 int	put_hex(t_format *format, unsigned long long nb, int is_upp)
 {
-	int	count;
-	int	i;
-
-	i = 0;
-	count = count_unsigned(nb, 16);
-	if (format->specifier == 'p' || (!nb && format->flags & ALTERNATE_FORM))
-		i = 2;
-	if (format->precision == -1)
-		format->precision = max(count , count - i);
-	if (format->flags & FILLZERO && format->width > format->precision)
-	{
-		format->precision = format->width;
-		format->width = 0;
-	}
+	int hex_size;
+	char fill;
+	
+	fill = ' ';
+	hex_size = !!(format->flags & ALTERNATE_FORM) * 2;
+	if (!nb && format->specifier != 'p')
+		hex_size = 0;
+	if ((format->flags & FILLZERO) && format->width < format->precision)
+		fill = '0';
+	format->precision = max(count_unsigned(nb , 16), format->precision);
+	format->width = format->width - format->precision - hex_size ;
+	format->width *= (format->width > 0);
 	if (format->flags & ADJUSTLEFT)
 	{
-		count = _put_hex(format, nb, is_upp);
-		set_filler(format, format->width - i - format->precision);
+		_put_hex(format, nb, is_upp);
+		filler(fill, format->width);
 	}
 	else
 	{
-		set_filler(format, format->width - i - format->precision);
-		count = _put_hex(format, nb, is_upp);
+		filler(fill, format->width);
+		_put_hex(format, nb, is_upp);
 	}
-	return (max(format->width, count));
+
+	return format->width + hex_size + format->precision;
 }
 
 int	put_addr(t_format *format, unsigned long long nb)

@@ -77,7 +77,7 @@ int	_put_hex(t_format *format, unsigned long long nb, int is_upp)
 	int		i;
 	int		count;
 	int		ignore_zero;
-	char	*selected[2] = {"0123456789abcdef0x", "0123456789ABCDEF0X"};
+char	*selected[2] = {"0123456789abcdef0x", "0123456789ABCDEF0X"};
 
 	i = 0;
 	count = 0;
@@ -85,11 +85,7 @@ int	_put_hex(t_format *format, unsigned long long nb, int is_upp)
 		i = 2;
 	write(1, selected[is_upp] + 16, 2 * (i > 0));
 	count += count_unsigned(nb, 16) - (!format->precision && !nb);
-	if (format->precision != -1 && format->precision >= count + i)
-	{
-		filler('0', format->precision - i - count);
-		count = format->precision - i;
-	}
+	filler('0', format->precision - count);
 	count += i;
 	i = 16 * 4;
 	ignore_zero = 1;

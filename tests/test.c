@@ -10,10 +10,10 @@ int main()
 
 	puts("===== test i  ====");
 	fflush(stdout);
-	fmt = " %6x";
-	ret = ft_printf(fmt, 1);
+	fmt = " %04.13x";
+	ret = ft_printf(fmt, 9);
 	printf("(%d)\n", ret);
-	ret = printf(fmt, 1);
+	ret = printf(fmt, 9);
 	printf("(%d)\n", ret);
 	fflush(stdout);
 }
