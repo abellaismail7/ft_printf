@@ -68,25 +68,31 @@ int	put_nbr(t_format *format, int nb)
 int	put_hex(t_format *format, unsigned long long nb, int is_upp)
 {
 	int hex_size;
-	char fill;
 	
-	fill = ' ';
 	hex_size = !!(format->flags & ALTERNATE_FORM) * 2;
 	if (!nb && format->specifier != 'p')
 		hex_size = 0;
-	if ((format->flags & FILLZERO) && format->width < format->precision)
-		fill = '0';
-	format->precision = max(count_unsigned(nb , 16), format->precision);
-	format->width = format->width - format->precision - hex_size ;
-	format->width *= (format->width > 0);
+	if ((format->flags & FILLZERO) 
+			&& (format->width < format->precision || format->precision == -1))
+	{
+		format->precision = max(format->precision, format->width - hex_size);
+		format->precision = max(count_unsigned(nb , 16), format->precision);
+		format->width = 0;
+	}
+	else {
+		format->precision = max(count_unsigned(nb , 16), format->precision);
+		format->width = format->width - format->precision - hex_size ;
+		format->width *= (format->width > 0);
+		
+	}
 	if (format->flags & ADJUSTLEFT)
 	{
 		_put_hex(format, nb, is_upp);
-		filler(fill, format->width);
+		filler(' ', format->width);
 	}
 	else
 	{
-		filler(fill, format->width);
+		filler(' ', format->width);
 		_put_hex(format, nb, is_upp);
 	}
 
