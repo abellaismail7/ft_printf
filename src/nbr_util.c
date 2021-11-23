@@ -88,7 +88,7 @@ int	_put_hex(t_format *format, unsigned long long nb, int is_upp)
 	if (format->precision != -1 && format->precision >= count + i)
 	{
 		filler('0', format->precision - i - count);
-		count = format->precision;
+		count = format->precision - i;
 	}
 	count += i;
 	i = 16 * 4;

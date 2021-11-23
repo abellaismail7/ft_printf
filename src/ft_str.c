@@ -46,7 +46,7 @@ int	put_fstr(t_format *format, char *str)
 	int	len;
 
 	len = 6;
-	if(format->precision < len)
+	if(format->precision != -1 && format->precision < len)
 		len = format->precision;
 	if (str == 0)
 		return (write(1, "(null)", len));
