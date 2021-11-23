@@ -52,7 +52,7 @@ int	put_nbr(t_format *format, int nb)
 	size = nb <= 0;
 	has_sign = 0;
 	if (nb == 0 && format->precision == 0)
-		return (size);
+		return put_fstr(format, "");
 	write(1, "-", (nb < 0 && (format->flags & FILLZERO)));
 	if (nb >= 0)
 	{
@@ -109,16 +109,18 @@ int	put_udec(t_format *format, unsigned int nb)
 {
 	int	size;
 
-	size = count_unsigned(nb, 10);
+	if (nb == 0 && format->precision == 0)
+		return (put_fstr(format, ""));
+	size = max(count_unsigned(nb, 10), format->precision);
 	if (format->flags & ADJUSTLEFT)
 	{
-		size = __ft_putnbr(format, nb, size);
+		__ft_putnbr(format, nb);
 		set_filler(format, format->width - size);
 	}
 	else
 	{
 		set_filler(format, format->width - size);
-		size = __ft_putnbr(format, nb, size);
+		__ft_putnbr(format, nb);
 	}
 	return (max(format->width, size));
 }

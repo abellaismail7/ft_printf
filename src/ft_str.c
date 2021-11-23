@@ -46,10 +46,13 @@ int	put_fstr(t_format *format, char *str)
 	int	len;
 
 	len = 6;
-	if(format->precision != -1 && format->precision < len)
+	if (format->precision != -1 && format->precision < len)
 		len = format->precision;
 	if (str == 0)
-		return (write(1, "(null)", len));
+	{
+		filler_setter(put_mystr, format, "(null)", len);
+		return (max(len , format->width));
+	}
 	len = ft_strlen(str);
 	if (format->precision != -1 && format->precision < len)
 		len = format->precision;

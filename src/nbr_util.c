@@ -57,18 +57,17 @@ int	_ft_putnbr(unsigned int nb)
 	return (count_base(nb, 10));
 }
 
-int	__ft_putnbr(t_format *format, unsigned int nb, int size)
+void	__ft_putnbr(t_format *format, unsigned int nb)
 {
-	int	ret;
+	int	size;
 
-	ret = size;
+	size = count_unsigned(nb, 10);
 	if (format->precision != -1 && format->precision >= size)
 	{
 		filler('0', format->precision - size);
-		ret = format->precision;
+		size = format->precision;
 	}
 	_ft_putnbr(nb);
-	return (ret);
 }
 
 int	_put_hex(t_format *format, unsigned long long nb, int is_upp)
