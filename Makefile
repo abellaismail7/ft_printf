@@ -4,7 +4,7 @@ INCLUDE = -I./include
 AR		= ar
 ARFLAGS = rc
 
-FILES 	= ft_printf ft_str ft_expr ft_nbr util nbr_util str_util
+FILES 	= ft_printf ft_str ft_expr ft_nbr util nbr_util str_util ft_extra
 S_DIR	= src
 B_DIR	= build
 SRC		= $(addprefix $(S_DIR)/, 	$(FILES:=.c))

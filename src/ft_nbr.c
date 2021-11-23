@@ -52,7 +52,7 @@ int	put_nbr(t_format *format, int nb)
 	size = nb <= 0;
 	has_sign = 0;
 	if (nb == 0 && format->precision == 0)
-		return put_fstr(format, "");
+		return (put_fstr(format, ""));
 	write(1, "-", (nb < 0 && (format->flags & FILLZERO)));
 	if (nb >= 0)
 	{
@@ -65,44 +65,34 @@ int	put_nbr(t_format *format, int nb)
 	return (max(size, format->width));
 }
 
-int	put_hex(t_format *format, unsigned long long nb, int is_upp)
+int	put_hex(t_format *format, unsigned long long nb)
 {
-	int hex_size;
-	
+	int	hex_size;
+
 	hex_size = !!(format->flags & ALTERNATE_FORM) * 2;
 	if (!nb && format->specifier != 'p')
 		hex_size = 0;
-	if ((format->flags & FILLZERO) 
-			&& (format->width < format->precision || format->precision == -1))
+	if ((format->flags & FILLZERO)
+		&& (format->width < format->precision || format->precision == -1))
 	{
 		format->precision = max(format->precision, format->width - hex_size);
-		format->precision = max(count_unsigned(nb , 16), format->precision);
+		format->precision = max(count_unsigned(nb, 16), format->precision);
 		format->width = 0;
-	}
-	else {
-		format->precision = max(count_unsigned(nb , 16), format->precision);
-		format->width = format->width - format->precision - hex_size ;
-		format->width *= (format->width > 0);
-		
-	}
-	if (format->flags & ADJUSTLEFT)
-	{
-		_put_hex(format, nb, is_upp);
-		filler(' ', format->width);
 	}
 	else
 	{
-		filler(' ', format->width);
-		_put_hex(format, nb, is_upp);
+		format->precision = max(count_unsigned(nb, 16), format->precision);
+		format->width = format->width - format->precision - hex_size ;
+		format->width *= (format->width > 0);
 	}
-
-	return format->width + hex_size + format->precision;
+	filler_setter(_put_hex, format, &nb, 0);
+	return (format->width + hex_size + format->precision);
 }
 
 int	put_addr(t_format *format, unsigned long long nb)
 {
 	format->flags |= ALTERNATE_FORM;
-	return (put_hex(format, nb, 0));
+	return (put_hex(format, nb));
 }
 
 int	put_udec(t_format *format, unsigned int nb)

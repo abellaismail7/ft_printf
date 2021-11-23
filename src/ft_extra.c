@@ -1,24 +1,29 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   nbr_util.h                                         :+:      :+:    :+:   */
+/*   ft_extra.c                                         :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: iait-bel <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2021/11/21 20:16:13 by iait-bel          #+#    #+#             */
-/*   Updated: 2021/11/21 20:17:43 by iait-bel         ###   ########.fr       */
+/*   Created: 2021/11/23 23:40:03 by iait-bel          #+#    #+#             */
+/*   Updated: 2021/11/23 23:40:03 by iait-bel         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#ifndef NBR_UTIL_H
-# define NBR_UTIL_H
+#include <unistd.h>
 
-# include "ft_ds.h"
+void get_hex(unsigned long long nb, int *i, int *ignore_zero, int is_upp)
+{
+	char c;
+	char a[] = "0123456789abcdef";
+	char A[] = "0123456789ABCDEF";
 
-int		_ft_putnbr(unsigned int nb);
-int		count_unsigned(unsigned long long nb, int base);
-int		count_base(int nb, int base);
-void	_put_hex(t_format *format, void *val);
-void	__ft_putnbr(t_format *format, unsigned int nb);
-
-#endif 
+	*i -= 4;
+	c = (nb >> *i) & 0xf;
+	if (*ignore_zero && c == 0)
+		return ;
+	if(is_upp)
+		*ignore_zero = ! write(1, A + c, 1);
+	else
+		*ignore_zero = ! write(1, a + c, 1);
+}

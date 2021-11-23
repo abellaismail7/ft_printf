@@ -105,7 +105,7 @@ int	put_exp(t_format *format, va_list list)
 	else if (sp == 'u')
 		count = put_udec(format, va_arg(list, unsigned int));
 	else if (sp == 'x' || sp == 'X')
-		count = put_hex(format, va_arg(list, unsigned long long), sp == 'X');
+		count = put_hex(format, va_arg(list, unsigned long long));
 	else
 		count = put_what(format);
 	return (count);

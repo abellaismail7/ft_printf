@@ -20,7 +20,7 @@ int	put_char(t_format *format, int c)
 {
 	if (format->flags & ADJUSTLEFT)
 	{
-		write(1, &c, 1); // test !printable
+		write(1, &c, 1);
 		set_filler(format, format->width - 1);
 	}
 	else
@@ -51,7 +51,7 @@ int	put_fstr(t_format *format, char *str)
 	if (str == 0)
 	{
 		filler_setter(put_mystr, format, "(null)", len);
-		return (max(len , format->width));
+		return (max(len, format->width));
 	}
 	len = ft_strlen(str);
 	if (format->precision != -1 && format->precision < len)

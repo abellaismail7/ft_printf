@@ -53,7 +53,8 @@ void	clear_format(t_format *format)
 {
 	format->precision = -1;
 	format->flags = 0;
-	format->width = format->flags;
+	format->width = 0;
+	format->flags = 0;
 }
 
 int	max(int a, int b)
