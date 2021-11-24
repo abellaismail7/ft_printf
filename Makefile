@@ -20,14 +20,11 @@ $(B_DIR)/%.o: $(S_DIR)/%.c
 	mkdir -p $(@D)
 	$(CC) $(CCFLAGS) $(INCLUDE) -o $@ -c $<
 
-debug: CCFLAGS += -g
-debug: fclean all
 bonus: all
 
 clean:
 	rm -f $(OBJ)
 	rm -rf $(B_DIR)
-	rm -rf $(TEST_EXEC)
 
 fclean: clean
 	rm -f $(LIB)
