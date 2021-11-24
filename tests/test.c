@@ -22,10 +22,10 @@ int main()
 
 	puts("===== test i  ====");
 	fflush(stdout);
-	fmt = " %0+6.8d";
-	ret = ft_printf(fmt, -1);
+	fmt = " %-0x";
+	ret = ft_printf(fmt, 0);
 	printf("(%d)\n", ret);
-	ret = printf(fmt, -1);
+	ret = printf(fmt, 0);
 	printf("(%d)\n", ret);
 	fflush(stdout);
 }

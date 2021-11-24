@@ -13,12 +13,13 @@
 #include "ft_ds.h"
 #include <unistd.h>
 
-int is_number(t_format *format)
+int	is_number(t_format *format)
 {
-	char sp;
-	
+	char	sp;
+
 	sp = format->specifier;
-	return (sp == 'x' || sp == 'X' || sp == 'd' || sp == 'i' || sp == 'p' || sp == 'u');
+	return (sp == 'x' || sp == 'X' || sp == 'd'
+		|| sp == 'i' || sp == 'p' || sp == 'u');
 }
 
 void	get_hex(unsigned long long nb, int *i, int *ignore_zero, int is_upp)
