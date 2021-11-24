@@ -29,4 +29,6 @@ clean:
 fclean: clean
 	rm -f $(LIB)
 
-.PHONY: all clean fclean
+re: fclean all
+
+.PHONY: all bonus clean fclean re
