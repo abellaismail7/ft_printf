@@ -17,8 +17,6 @@
 #include "ft_nbr.h"
 #include "util.h"
 
-void	about_exp(t_format format, va_list list);
-
 int	put_str(char *str)
 {
 	int	i;

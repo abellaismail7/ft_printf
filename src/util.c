@@ -12,6 +12,7 @@
 
 #include <unistd.h>
 #include "ft_ds.h"
+#include "ft_extra.h"
 
 void	set_filler(t_format *format, int len)
 {
@@ -19,7 +20,8 @@ void	set_filler(t_format *format, int len)
 		return ;
 	while (len--)
 	{
-		if (format->flags & FILLZERO)
+		if (format->flags & FILLZERO
+			&& !(is_number(format) && format->precision != -1))
 			write(1, "0", 1);
 		else
 			write(1, " ", 1);

@@ -73,10 +73,10 @@ void	__ft_putnbr(t_format *format, unsigned int nb)
 
 int	_put_hex(t_format *format, unsigned long long *val)
 {
-	int		i;
-	int		count;
-	int		ignore_zero;
-	unsigned long long nb;
+	int					i;
+	int					count;
+	int					ignore_zero;
+	unsigned long long	nb;
 
 	nb = *val;
 	i = 0;

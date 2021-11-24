@@ -1,3 +1,15 @@
+/* ************************************************************************** */
+/*                                                                            */
+/*                                                        :::      ::::::::   */
+/*   test.c                                             :+:      :+:    :+:   */
+/*                                                    +:+ +:+         +:+     */
+/*   By: iait-bel <marvin@42.fr>                    +#+  +:+       +#+        */
+/*                                                +#+#+#+#+#+   +#+           */
+/*   Created: 2021/11/24 11:52:35 by iait-bel          #+#    #+#             */
+/*   Updated: 2021/11/24 11:52:35 by iait-bel         ###   ########.fr       */
+/*                                                                            */
+/* ************************************************************************** */
+
 #include <stdio.h>
 #include <limits.h>
 #include "ft_printf.h"
@@ -10,10 +22,10 @@ int main()
 
 	puts("===== test i  ====");
 	fflush(stdout);
-	fmt = " %# 4.0p";
-	ret = ft_printf(fmt, 0);
+	fmt = " %0+6.8d";
+	ret = ft_printf(fmt, -1);
 	printf("(%d)\n", ret);
-	ret = printf(fmt, 0);
+	ret = printf(fmt, -1);
 	printf("(%d)\n", ret);
 	fflush(stdout);
 }

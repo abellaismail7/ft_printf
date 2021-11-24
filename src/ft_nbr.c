@@ -70,7 +70,7 @@ int	put_hex(t_format *format, unsigned long long nb)
 	int	hex_size;
 
 	hex_size = !!(format->flags & ALTERNATE_FORM) * 2;
-	if (!nb && format->specifier != 'p')
+	if (nb == 0 && format->specifier != 'p')
 		hex_size = 0;
 	if ((format->flags & FILLZERO)
 		&& (format->width < format->precision || format->precision == -1))
@@ -81,7 +81,8 @@ int	put_hex(t_format *format, unsigned long long nb)
 	}
 	else
 	{
-		format->precision = max(count_unsigned(nb, 16), format->precision);
+		if (format->precision != 0 || nb != 0)
+			format->precision = max(count_unsigned(nb, 16), format->precision);
 		format->width = format->width - format->precision - hex_size ;
 		format->width *= (format->width > 0);
 	}
@@ -91,6 +92,11 @@ int	put_hex(t_format *format, unsigned long long nb)
 
 int	put_addr(t_format *format, unsigned long long nb)
 {
+	if (format->precision == 0 && nb == 0)
+	{
+		format->precision = 2;
+		return (put_fstr(format, "0x"));
+	}
 	format->flags |= ALTERNATE_FORM;
 	return (put_hex(format, nb));
 }
