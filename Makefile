@@ -16,7 +16,7 @@ all: $(LIB)
 $(LIB): $(OBJ)
 	$(AR) $(ARFLAGS) $(LIB) $(OBJ)
 
-$(B_DIR)/%.o: $(S_DIR)/%.c
+$(B_DIR)/%.o: $(S_DIR)/%.c ft_printf.h
 	mkdir -p $(@D)
 	$(CC) $(CCFLAGS) $(INCLUDE) -o $@ -c $<
 
