@@ -17,7 +17,7 @@
 #include "ft_nbr.h"
 #include "util.h"
 
-int	put_str(char *str)
+int	put_str(const char *str)
 {
 	int	i;
 
@@ -28,7 +28,7 @@ int	put_str(char *str)
 	return (i);
 }
 
-char	*parse_flags(char *exp, unsigned short *flags)
+const char	*parse_flags(const char *exp, unsigned short *flags)
 {
 	char	c;
 
@@ -57,7 +57,7 @@ char	*parse_flags(char *exp, unsigned short *flags)
 	return (exp);
 }
 
-char	*parse_var(char *exp, int *dest)
+const char	*parse_var(const char *exp, int *dest)
 {
 	int	res;
 
@@ -72,7 +72,7 @@ char	*parse_var(char *exp, int *dest)
 	return (exp);
 }
 
-char	*parse_exp(char *exp, t_format *format)
+const char	*parse_exp(const char *exp, t_format *format)
 {
 	exp = parse_flags(exp, &format->flags);
 	exp = parse_var(exp, &format->width);

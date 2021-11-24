@@ -16,13 +16,13 @@
 #include "util.h"
 #include "ft_ds.h"
 
-int	ft_printf(char *format, ...)
+int	ft_printf(const char *format, ...)
 {
-	va_list		args;
-	char		*str;
-	t_format	d_format;
-	int			counter;
-	int			tmp;
+	va_list			args;
+	const char		*str;
+	t_format		d_format;
+	int				counter;
+	int				tmp;
 
 	va_start(args, format);
 	str = format;

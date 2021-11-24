@@ -16,9 +16,9 @@
 # include "ft_ds.h"
 # include <stdarg.h>
 
-int		put_str(char *str);
-int		next_exp(char **exp);
-char	*parse_exp(char *exp, t_format *format);
-int		put_exp(t_format *format, va_list list);
+int			put_str(const char *str);
+int			next_exp(const char **exp);
+const char	*parse_exp(const char *exp, t_format *format);
+int			put_exp(t_format *format, va_list list);
 
 #endif
